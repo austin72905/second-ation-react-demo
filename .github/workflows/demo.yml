@@ -36,5 +36,7 @@ jobs:
         uses: actions/download-artifact@v3  # 可以從上一個工作生成的artifact將他下載
         with:
           name: dist-files
+      - name: Output contents
+        run: ls  # 這邊會直接打印 剛剛下載的dist 文件裡面的內容
       - name: Deploy
         run: echo "Deploying..."
