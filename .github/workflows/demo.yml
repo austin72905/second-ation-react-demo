@@ -27,12 +27,14 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-files  # 名稱隨意
-          path: |
-            dist
-            package.json
+          path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3  # 可以從上一個工作生成的artifact將他下載
+        with:
+          name: dist-files
       - name: Deploy
         run: echo "Deploying..."
