@@ -1,0 +1,16 @@
+name: Test Project
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install NodeJS  # ubuntu-lastest 其實已經有預設安裝了，這邊只是示範，或是想要更新版本的
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci # 也可以用npm install 但是 npm ci 更安全，比較不會安裝錯版本
+      - name: Run tests
+        run: npm test
