@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3  # 官方提供的action
+        with:
+          path: ~/.npm  # 如果npm ci 執行時，會優先使用這裡面的檔案  # 這個檔案位置會因為 runs-on 使用的作業系統還有 安裝的依賴包差異有所改變 # 緩存其他job也可以調用
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}  # hashFiles 代表當 package-lock.json 依賴發生改變，就會棄用，讓下次npm ci變成新的，並緩存到~/.npm
       - name: Install dependencies
         run: npm ci
       - name: Test code
@@ -21,6 +26,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3  # 官方提供的action
+        with:
+          path: ~/.npm  # 如果npm ci 執行時，會優先使用這裡面的檔案  # 這個檔案位置會因為 runs-on 使用的作業系統還有 安裝的依賴包差異有所改變 # 緩存其他job也可以調用
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}  # hashFiles 代表當 package-lock.json 依賴發生改變，就會棄用，讓下次npm ci變成新的，並緩存到~/.npm
       - name: Install dependencies
         run: npm ci
       - name: Build website
